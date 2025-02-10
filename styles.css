@@ -7,8 +7,8 @@
 body {
     font-family: 'Arial', sans-serif;
     line-height: 1.6;
-    background: linear-gradient(135deg, #f5f7fa 0%, #e8edf5 100%);
-    color: #2c3e50;
+    background: linear-gradient(135deg, #f5f7fa 0%, #dce4f0 100%);
+    color: #1a2633;
 }
 
 .container {
@@ -22,20 +22,58 @@ body {
 .content-wrapper {
     position: relative;
     display: flex;
-    gap: 4rem;
+    gap: 6rem;
     max-width: 1200px;
     width: 100%;
     margin: 0 auto;
     align-items: center;
-    background: rgba(255, 255, 255, 0.95);
+    background: transparent;
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     padding: 3rem;
+    overflow: hidden;
+}
+
+.content-wrapper::before,
+.content-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.content-wrapper::before {
+    background: linear-gradient(to right, 
+        rgba(255, 255, 255, 0.97) 45%, 
+        rgba(220, 230, 255, 0.97) 45%
+    );
+    transform: skewX(20deg);
+    transform-origin: top;
+    box-shadow: inset 2px 0 5px rgba(0,0,0,0.15);
+}
+
+.content-wrapper::after {
+    background: linear-gradient(to right, 
+        transparent 44.5%,
+        rgba(50, 100, 150, 0.2) 44.5%,
+        rgba(50, 100, 150, 0.12) 45.5%,
+        transparent 45.5%
+    );
+    transform: skewX(20deg);
+    transform-origin: top;
 }
 
 .left-section {
     flex: 1;
     text-align: center;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(-135deg, rgba(255, 255, 255, 0.4), transparent);
+    padding: 2rem 3rem;
+    border-radius: 15px;
 }
 
 .right-section {
@@ -46,14 +84,18 @@ body {
     justify-content: center;
     max-width: 800px;
     margin: 0 auto;
-    padding: 2rem;
+    padding: 2rem 3rem;
+    position: relative;
+    z-index: 1;
+    background: linear-gradient(-135deg, rgba(230, 240, 255, 0.4), transparent);
+    border-radius: 15px;
 }
 
 .right-section h2 {
     font-size: 2.5rem;
     margin-bottom: 2rem;
     font-family: 'Courier New', monospace;
-    color: #2c3e50;
+    color: #1a2633;
     position: relative;
 }
 
@@ -61,10 +103,12 @@ body {
     content: '';
     position: absolute;
     bottom: -10px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 60px;
-    height: 4px;
-    background: #000;
+    height: 3px;
+    background: linear-gradient(90deg, #2c3e50, #3498db);
+    border-radius: 2px;
 }
 
 .right-section p {
@@ -80,13 +124,18 @@ body {
     margin: 0 auto 2rem;
     overflow: hidden;
     border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-    transition: transform 0.3s ease;
+    border: 4px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 
+        0 5px 15px rgba(0,0,0,0.2),
+        0 0 0 15px rgba(255, 255, 255, 0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .profile-image:hover {
-    transform: scale(1.05);
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 
+        0 8px 20px rgba(0,0,0,0.3),
+        0 0 0 20px rgba(255, 255, 255, 0.15);
 }
 
 .profile-image img {
@@ -116,7 +165,7 @@ h1 {
 }
 
 .title {
-    color: #666;
+    color: #4a4a4a;
     margin-bottom: 1.5rem;
     font-weight: 500;
     text-transform: uppercase;
@@ -125,25 +174,50 @@ h1 {
 }
 
 .btn {
-    background-color: #000;
+    background: linear-gradient(135deg, #1a2633, #2980b9);
     color: white;
     padding: 1rem 3rem;
     border: none;
     cursor: pointer;
     font-size: 1.1rem;
-    min-width: 200px;
+    width: 200px;
     text-decoration: none;
     transition: all 0.3s ease;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn:hover {
-    background-color: #333;
     transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+}
+
+.btn:hover::after {
+    left: 100%;
 }
 
 .email-btn {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
 }
 
 .social-links {
@@ -154,15 +228,35 @@ h1 {
 }
 
 .social-links a {
-    color: #000;
+    color: #1a2633;
     font-size: 1.5rem;
-    margin: 0 0.5rem;
+    margin: 0 0.8rem;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    transition: all 0.3s ease;
+    position: relative;
 }
 
 .social-links a:hover {
-    transform: scale(1.2);
+    transform: translateY(-3px) scale(1.1);
+    color: #2980b9;
+}
+
+.social-links a::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, #2c3e50, #3498db);
+    bottom: -5px;
+    left: 0;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+    transform-origin: right;
+}
+
+.social-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .about-section h2 {
@@ -179,7 +273,9 @@ h1 {
 .button-group {
     display: flex;
     justify-content: center;
+    gap: 1.5rem;
     width: 100%;
+    margin-top: 1rem;
 }
 
 /* Responsive Design */
@@ -196,6 +292,7 @@ h1 {
 
     .button-group {
         flex-direction: column;
+        align-items: center;
         gap: 1rem;
     }
 
@@ -205,6 +302,11 @@ h1 {
 
     .right-section h2 {
         font-size: 2rem;
+    }
+
+    .btn {
+        width: 100%;
+        max-width: 200px;
     }
 }
 
@@ -274,10 +376,14 @@ h1 {
     align-items: center;
     justify-content: flex-end;
     gap: 0.5rem;
-    color: #666;
+    color: #4a4a4a;
 }
 
 .personal-info i {
-    color: #2c3e50;
+    color: #1a2633;
     font-size: 1rem;
+}
+
+.resume-btn {
+    margin: 0;
 } 
