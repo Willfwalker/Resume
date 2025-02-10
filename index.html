@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Software Engineer Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Font Awesome for social icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="personal-info">
+                <p><i class="fas fa-map-marker-alt"></i> Bellingham, WA</p>
+                <p><i class="fas fa-user"></i> 19 years old</p>
+            </div>
+            <div class="left-section">
+                <div class="profile-image">
+                    <img src="pool table.jpg" alt="Profile Picture">
+                </div>
+                <h1>&lt;WILLIAM WALKER&gt;</h1>
+                <p class="title">Software Engineer</p>
+                
+                <button class="btn email-btn">Contact me</button>
+
+                <div class="social-links">
+                    <a href="https://www.instagram.com/willfwalker1013/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://github.com/Willfwalker" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/will-walker-703765340" target="_blank"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <h2>&lt;/About Me&gt;</h2>
+                <p class="about-text">I am a diligent senior software engineer with 10 years of experience in business applications. I am eager to join a tech company that builds out-of-the-box solutions for regional clients. I am skilled in developing plans, managing projects, and user documentation.</p>
+                
+                <div class="button-group">
+                    <button class="btn">Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="contactPopup" class="popup">
+        <div class="popup-content">
+            <span class="close-btn">&times;</span>
+            <h3>Contact Information</h3>
+            <p><i class="fas fa-phone"></i> +1 (360) 685-3001</p>
+            <p><i class="fas fa-envelope"></i> willfwalker@gmail.com</p>
+            <p><i class="fas fa-map-marker-alt"></i> 2125 Academy rd, Bellingham WA</p>
+        </div>
+    </div>
+
+    <script>
+        const popup = document.getElementById('contactPopup');
+        const btn = document.querySelector('.email-btn');
+        const closeBtn = document.querySelector('.close-btn');
+
+        btn.onclick = function() {
+            popup.style.display = "block";
+        }
+
+        closeBtn.onclick = function() {
+            popup.style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == popup) {
+                popup.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html> 
