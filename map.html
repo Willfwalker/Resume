@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location — William Walker</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body class="map-page">
+    <header class="site-header">
+        <div class="header-inner">
+            <span class="header-brand">&lt;WW/&gt;</span>
+            <nav class="header-nav">
+                <a href="index.html" class="btn header-map-btn"><i class="fas fa-arrow-left"></i> Back</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="map-container">
+        <div class="map-card">
+            <h2 class="map-title"><i class="fas fa-map-marker-alt"></i> Seattle, WA</h2>
+            <p class="map-subtitle">Based in the Pacific Northwest</p>
+            <div id="world-map"></div>
+        </div>
+    </div>
+
+    <script>
+        const map = L.map('world-map', {
+            center: [47.6062, -122.3321],
+            zoom: 3,
+            zoomControl: true,
+            scrollWheelZoom: true
+        });
+
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 19
+        }).addTo(map);
+
+        const seattleIcon = L.divIcon({
+            className: 'seattle-dot',
+            html: '<div class="dot-outer"><div class="dot-inner"></div></div>',
+            iconSize: [24, 24],
+            iconAnchor: [12, 12]
+        });
+
+        L.marker([47.6062, -122.3321], { icon: seattleIcon })
+            .addTo(map)
+            .bindPopup('<strong>Seattle, WA</strong><br>Home base of William Walker')
+            .openPopup();
+    </script>
+</body>
+</html>
