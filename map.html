@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Map - Orange City, Idaho</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        .map-page-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .map-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .map-card h1 {
+            font-family: 'Courier New', monospace;
+            font-size: 2rem;
+            color: #1a2633;
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .map-card .subtitle {
+            text-align: center;
+            color: #4a4a4a;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+        }
+
+        #map {
+            width: 100%;
+            height: 500px;
+            border-radius: 12px;
+            border: 2px solid rgba(0, 34, 68, 0.15);
+            overflow: hidden;
+        }
+
+        .back-link {
+            margin-top: 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="map-page-container">
+        <div class="map-card">
+            <h1>&lt;World Map&gt;</h1>
+            <p class="subtitle">Orange City, Idaho</p>
+            <div id="map"></div>
+            <div class="back-link">
+                <a href="index.html" class="btn">← Back</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script>
+        const map = L.map('map').setView([20, 0], 2);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 18
+        }).addTo(map);
+
+        // Orange City, Idaho coordinates
+        const lat = 44.9216;
+        const lng = -116.0906;
+
+        const marker = L.circleMarker([lat, lng], {
+            radius: 10,
+            fillColor: '#FF6B00',
+            color: '#cc4a00',
+            weight: 2,
+            opacity: 1,
+            fillOpacity: 0.9
+        }).addTo(map);
+
+        marker.bindPopup(
+            '<strong>Orange City, Idaho</strong><br>Lat: ' + lat + '<br>Lng: ' + lng,
+            { maxWidth: 200 }
+        ).openPopup();
+    </script>
+</body>
+</html>
