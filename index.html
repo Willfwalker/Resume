@@ -43,13 +43,38 @@
         </div>
     </div>
 
+    <div class="video-section">
+        <h2 class="video-title">&lt;/My Work&gt;</h2>
+        <div class="video-wrapper">
+            <iframe
+                src="https://www.youtube.com/embed/wHtsFGAiVoE"
+                title="YouTube video"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+
     <div id="contactPopup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
-            <h3>Contact Information</h3>
-            <p><i class="fas fa-phone"></i> +1 (360) 685-3001</p>
-            <p><i class="fas fa-envelope"></i> willfwalker@gmail.com</p>
-            <p><i class="fas fa-map-marker-alt"></i> 2125 Academy rd, Bellingham WA</p>
+            <h3>Contact Me</h3>
+            <form class="contact-form" action="mailto:willfwalker@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" placeholder="Your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" placeholder="What's on your mind?" required></textarea>
+                </div>
+                <button type="submit" class="btn submit-btn">Send Message</button>
+            </form>
         </div>
     </div>
 
