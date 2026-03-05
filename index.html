@@ -9,6 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
+    <button class="dark-mode-toggle" id="darkModeToggle" aria-label="Toggle dark mode">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <div class="container">
         <div class="content-wrapper">
             <div class="left-section">
@@ -95,6 +99,24 @@
             if (event.target == popup) {
                 popup.style.display = "none";
             }
+        }
+
+        // Dark mode toggle
+        const darkToggle = document.getElementById('darkModeToggle');
+        const darkIcon = darkToggle.querySelector('i');
+
+        function setDarkMode(enabled) {
+            document.body.classList.toggle('dark-mode', enabled);
+            darkIcon.className = enabled ? 'fas fa-sun' : 'fas fa-moon';
+            localStorage.setItem('darkMode', enabled ? 'on' : 'off');
+        }
+
+        darkToggle.addEventListener('click', function() {
+            setDarkMode(!document.body.classList.contains('dark-mode'));
+        });
+
+        if (localStorage.getItem('darkMode') === 'on') {
+            setDarkMode(true);
         }
     </script>
 </body>
