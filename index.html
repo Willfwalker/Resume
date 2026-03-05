@@ -7,6 +7,14 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Font Awesome for social icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
+        }
+    }
+    </script>
 </head>
 <body>
     <div class="container">
@@ -56,6 +64,11 @@
         </div>
     </div>
 
+    <div class="skills-section">
+        <h2 class="skills-title">&lt;/Skills&gt;</h2>
+        <div id="skills-canvas"></div>
+    </div>
+
     <div id="contactPopup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
@@ -77,6 +90,150 @@
             </form>
         </div>
     </div>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        const container = document.getElementById('skills-canvas');
+
+        const scene = new THREE.Scene();
+
+        const camera = new THREE.PerspectiveCamera(55, container.clientWidth / container.clientHeight, 0.1, 100);
+        camera.position.set(0, 0, 9);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setClearColor(0x000000, 0);
+        container.appendChild(renderer.domElement);
+
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(container.clientWidth, container.clientHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0';
+        labelRenderer.domElement.style.left = '0';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        container.appendChild(labelRenderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 1.2);
+        scene.add(ambientLight);
+        const pointLight = new THREE.PointLight(0x40B4FF, 5, 25);
+        scene.add(pointLight);
+        const pointLight2 = new THREE.PointLight(0x002244, 3, 20);
+        pointLight2.position.set(4, 2, 4);
+        scene.add(pointLight2);
+
+        // Central glowing sphere
+        const centerGeo = new THREE.SphereGeometry(0.35, 32, 32);
+        const centerMat = new THREE.MeshStandardMaterial({
+            color: 0x40B4FF,
+            emissive: 0x40B4FF,
+            emissiveIntensity: 0.8,
+            metalness: 0.9,
+            roughness: 0.1
+        });
+        const centerSphere = new THREE.Mesh(centerGeo, centerMat);
+        scene.add(centerSphere);
+
+        // Skills data
+        const skills = [
+            { name: 'Python',     color: 0x40B4FF },
+            { name: 'JavaScript', color: 0x6dcfff },
+            { name: 'C',          color: 0x1a8fc1 },
+            { name: 'C++',        color: 0x004a8f },
+            { name: 'HTML',       color: 0x40B4FF },
+            { name: 'CSS',        color: 0x1a5c99 },
+            { name: 'Assembly',   color: 0x6dcfff },
+            { name: 'React',      color: 0x40B4FF },
+            { name: 'Firebase',   color: 0x1a8fc1 },
+        ];
+
+        const lineMat = new THREE.LineBasicMaterial({ color: 0x40B4FF, transparent: true, opacity: 0.18 });
+
+        const skillObjects = skills.map((skill, i) => {
+            const radius = 2.8 + (i % 3) * 0.8;
+            const inclination = ((i / skills.length) - 0.5) * Math.PI * 0.75;
+            const initialAngle = (i / skills.length) * Math.PI * 2;
+            const speed = 0.18 + (i % 4) * 0.07;
+
+            const geo = new THREE.SphereGeometry(0.18, 20, 20);
+            const mat = new THREE.MeshStandardMaterial({
+                color: skill.color,
+                emissive: skill.color,
+                emissiveIntensity: 0.5,
+                metalness: 0.6,
+                roughness: 0.25
+            });
+            const mesh = new THREE.Mesh(geo, mat);
+            scene.add(mesh);
+
+            const div = document.createElement('div');
+            div.className = 'skill-label';
+            div.textContent = skill.name;
+            const label = new CSS2DObject(div);
+            label.position.set(0, 0.3, 0);
+            mesh.add(label);
+
+            // Line from center to skill
+            const points = [new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, 0)];
+            const lineGeo = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(lineGeo, lineMat);
+            scene.add(line);
+
+            return { mesh, radius, inclination, angle: initialAngle, speed, line, lineGeo };
+        });
+
+        // Starfield particles
+        const particleCount = 250;
+        const positions = new Float32Array(particleCount * 3);
+        for (let i = 0; i < particleCount; i++) {
+            positions[i * 3]     = (Math.random() - 0.5) * 22;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 22;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 22;
+        }
+        const particleGeo = new THREE.BufferGeometry();
+        particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+        const particleMat = new THREE.PointsMaterial({ color: 0x40B4FF, size: 0.06, transparent: true, opacity: 0.5 });
+        const particles = new THREE.Points(particleGeo, particleMat);
+        scene.add(particles);
+
+        let time = 0;
+        function animate() {
+            requestAnimationFrame(animate);
+            time += 0.01;
+
+            centerSphere.rotation.y = time * 0.4;
+            particles.rotation.y = time * 0.03;
+            particles.rotation.x = time * 0.015;
+
+            skillObjects.forEach(obj => {
+                obj.angle += obj.speed * 0.01;
+                const x = Math.cos(obj.angle) * obj.radius * Math.cos(obj.inclination);
+                const y = Math.sin(obj.inclination) * obj.radius * 0.6;
+                const z = Math.sin(obj.angle) * obj.radius * Math.cos(obj.inclination);
+                obj.mesh.position.set(x, y, z);
+
+                // Update line endpoints
+                const pos = obj.lineGeo.attributes.position.array;
+                pos[3] = x; pos[4] = y; pos[5] = z;
+                obj.lineGeo.attributes.position.needsUpdate = true;
+            });
+
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            const w = container.clientWidth;
+            const h = container.clientHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+            labelRenderer.setSize(w, h);
+        });
+    </script>
 
     <script>
         const popup = document.getElementById('contactPopup');
