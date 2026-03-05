@@ -56,6 +56,66 @@
         </div>
     </div>
 
+    <div class="skills-section">
+        <h2 class="skills-title">&lt;/Skills&gt;</h2>
+        <div class="skills-grid">
+            <div class="skill-item" data-level="90">
+                <div class="skill-header">
+                    <span class="skill-name">Python</span>
+                    <span class="skill-percent">90%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+            <div class="skill-item" data-level="85">
+                <div class="skill-header">
+                    <span class="skill-name">JavaScript</span>
+                    <span class="skill-percent">85%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+            <div class="skill-item" data-level="80">
+                <div class="skill-header">
+                    <span class="skill-name">HTML &amp; CSS</span>
+                    <span class="skill-percent">80%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+            <div class="skill-item" data-level="75">
+                <div class="skill-header">
+                    <span class="skill-name">C / C++</span>
+                    <span class="skill-percent">75%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+            <div class="skill-item" data-level="65">
+                <div class="skill-header">
+                    <span class="skill-name">Assembly</span>
+                    <span class="skill-percent">65%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+            <div class="skill-item" data-level="70">
+                <div class="skill-header">
+                    <span class="skill-name">Front-End Dev</span>
+                    <span class="skill-percent">70%</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="contactPopup" class="popup">
         <div class="popup-content">
             <span class="close-btn">&times;</span>
@@ -96,6 +156,24 @@
                 popup.style.display = "none";
             }
         }
+
+        // Scroll-based skills animation
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const item = entry.target;
+                    const level = item.dataset.level;
+                    const fill = item.querySelector('.skill-fill');
+                    item.classList.add('visible');
+                    fill.style.width = level + '%';
+                    skillObserver.unobserve(item);
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.skill-item').forEach(item => {
+            skillObserver.observe(item);
+        });
     </script>
 </body>
 </html> 
