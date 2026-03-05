@@ -435,6 +435,65 @@ h1 {
     height: 100%;
 }
 
+/* Skills Three.js Section */
+.skills-section {
+    max-width: 900px;
+    margin: 0 auto 4rem;
+    padding: 0 2rem;
+    text-align: center;
+}
+
+.skills-title {
+    font-size: 2rem;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+#skills-canvas {
+    position: relative;
+    height: 460px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+    background: linear-gradient(135deg, rgba(0,20,50,0.85) 0%, rgba(0,40,100,0.75) 100%);
+}
+
+#skills-canvas canvas {
+    display: block;
+}
+
+.skill-label {
+    color: #e8f4ff;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.3rem 0.75rem;
+    background: rgba(0, 34, 68, 0.75);
+    border: 1px solid rgba(64, 180, 255, 0.5);
+    border-radius: 20px;
+    pointer-events: none;
+    text-shadow: 0 0 10px rgba(64, 180, 255, 0.9);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+}
+
+@media (max-width: 768px) {
+    .skills-section {
+        padding: 0 1rem;
+        margin-bottom: 2rem;
+    }
+
+    .skills-title {
+        font-size: 1.5rem;
+    }
+
+    #skills-canvas {
+        height: 320px;
+    }
+}
+
 /* Contact Form */
 .contact-form {
     display: flex;
